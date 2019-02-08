@@ -11,7 +11,9 @@ namespace Task1
         public static bool Prime(int k)
         {
             if (k <= 1) return false;
-            for (int i = 2; i <= Math.Sqrt(k); i++)
+            else if (k == 2) return true;
+            else if (k % 2 == 0) return false;
+            for (int i = 3; i <= Math.Sqrt(k); i += 2)
             {
                 if (k % i == 0) return false;
             }

@@ -10,14 +10,14 @@ namespace Task2
     {
         public string name;
         public string id;
-        public int year = 0;
+        public int year;
 
         public Student(string nname, string iid)
         {
             name = nname;
             id = iid;
-
-        }
+            year = 0;
+    }
 
         public string Accessname()
         {
@@ -28,6 +28,11 @@ namespace Task2
         {
             return id;
         }
+        public void Show(Student a)
+        {
+            year++;
+            Console.WriteLine(a.Accessname() + " " + a.Accessid() +" "+year);
+        }
 
     }
     class Program
@@ -37,7 +42,11 @@ namespace Task2
             string n = Console.ReadLine();
             string i = Console.ReadLine();
             Student a = new Student(n, i);
-            Console.WriteLine(a.Accessname() + " " + a.Accessid() + " " );
+            Student b = new Student("Mask", "19BD99");
+            a.Show(a);
+            b.Show(b);
+            a.Show(a);
+            
         }
     }
 }
