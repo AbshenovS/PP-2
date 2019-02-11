@@ -12,46 +12,19 @@ namespace Task3
         
         static void Main()
         {
-            DirectoryInfo dirInfo = new DirectoryInfo(@"C:\Users\hp\Desktop\Test");
-            FileSystemInfo[] x = dirInfo.GetFileSystemInfos();
-            string s = "   ";
-            for (int i = 0; i < x.Length; i++)
-            {
-                if (x[i].GetType() == typeof(DirectoryInfo))
-                {
-
-                    Console.WriteLine(x[i]);
-                    FileSystemInfo[] items = (x[i] as DirectoryInfo).GetFileSystemInfos();
-                    PrintInfo(items,s);
-                    s = s + "    ";
-                    Fldr(items,s);
-                }
-                else
-                {
-                    Console.WriteLine(x[i]);
-                }
-
-            }
+            DirectoryInfo folder= new DirectoryInfo(@"C:\Users\hp\Desktop\Test");
+            Print(folder, "");
         }
-        static void PrintInfo(FileSystemInfo[] x,string s)
+        static void Print(DirectoryInfo folder,string s)
         {
-            foreach (var t in x)
+            Console.WriteLine(s + folder.Name);
+            s = s + "   ";
+            FileSystemInfo[] x = folder.GetFileSystemInfos();
+            foreach(var t in x)
             {
-                Console.WriteLine(s + t.Name);
+                if (t.GetType() == typeof(DirectoryInfo)) Print(t as DirectoryInfo, s);
+                else Console.WriteLine(s+t.Name);
             }
-        }
-        static void Fldr(FileSystemInfo[] x,string s)
-        {
-            
-            for (int i = 0; i < x.Length; i++)
-            {
-                if (x[i].GetType() == typeof(DirectoryInfo))
-                {
-                    FileSystemInfo[] items = (x[i] as DirectoryInfo).GetFileSystemInfos();
-                    PrintInfo(items,s);
-                }
-            }
-
         }
     }
 }
