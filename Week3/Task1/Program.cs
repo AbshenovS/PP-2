@@ -9,8 +9,7 @@ namespace Task1
 {
     enum FSIMode
     {
-        DirectoryInfo = 1,
-        File
+        Folder, File
     }
     class Layer
     {
@@ -41,14 +40,9 @@ namespace Task1
         void SelectedColor(int i)
         {
             if (i == SelectedIndex)
-            {
-                Console.BackgroundColor = ConsoleColor.DarkMagenta;
-            }
-
+                Console.BackgroundColor = ConsoleColor.DarkBlue;
             else
-            {
                 Console.BackgroundColor = ConsoleColor.Black;
-            }
         }
         public void Draw()
         {
@@ -82,10 +76,10 @@ namespace Task1
             Stack<Layer> history = new Stack<Layer>();
             history.Push(l);
             bool quit = false;
-            FSIMode mode = FSIMode.DirectoryInfo;
+            FSIMode mode = FSIMode.Folder;
             while (!quit)
             {
-                if (mode == FSIMode.DirectoryInfo)
+                if (mode == FSIMode.Folder)
                 {
                     history.Peek().Draw();
                 }
@@ -98,11 +92,10 @@ namespace Task1
 
                 else if (key.Key == ConsoleKey.Enter)
                 {
-                    if (history.Peek().DirectoryContent.Length + history.Peek().FileContent.Length == 0) { break; }
-                    int newdir = history.Peek().SelectedIndex;
-                    if (newdir < history.Peek().DirectoryContent.Length)
+                    int newopen = history.Peek().SelectedIndex;
+                    if (newopen < history.Peek().DirectoryContent.Length)
                     {
-                        DirectoryInfo d = history.Peek().DirectoryContent[newdir];
+                        DirectoryInfo d = history.Peek().DirectoryContent[newopen];
                         history.Push(new Layer
                         {
                             DirectoryContent = d.GetDirectories(),
@@ -110,17 +103,28 @@ namespace Task1
                             SelectedIndex = 0
                         });
                     }
+                    else
+                    {
+                        mode = FSIMode.File;
+                        StreamReader sr = new StreamReader(history.Peek().FileContent[newopen - history.Peek().DirectoryContent.Length].FullName);
+                        string s = sr.ReadToEnd();
+                        sr.Close();
+                        Console.BackgroundColor = ConsoleColor.DarkGray;
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.Clear();
+                        Console.WriteLine(s);
+                    }
                 }
                 else if (key.Key == ConsoleKey.Backspace)
                 {
-                    if (mode == FSIMode.DirectoryInfo)
+                    if (mode == FSIMode.Folder)
                     {
                         if (history.Count > 1)
                             history.Pop();
                     }
                     else
                     {
-                        mode = FSIMode.DirectoryInfo;
+                        mode = FSIMode.Folder;
                         Console.ForegroundColor = ConsoleColor.White;
                     }
                 }

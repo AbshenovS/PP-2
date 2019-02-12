@@ -15,7 +15,7 @@ namespace Task4
             string path = Path.Combine(fldrname, "NewFolder");
             path = Path.Combine(path, "2-newfolder");
             Directory.CreateDirectory(path);
-            string newfile="Newfilenm.txt";
+            string newfile="Newfilen.txt";
             string path = Path.Combine(fldrname, newfile);
             File.Create(path);*/
             string filename = "Newfile.txt";
