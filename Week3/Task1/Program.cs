@@ -14,6 +14,7 @@ namespace Task1
     }
     class Layer
     {
+        int selectedIndex;
         public DirectoryInfo[] DirectoryContent
         {
             get;
@@ -26,8 +27,16 @@ namespace Task1
         }
         public int SelectedIndex
         {
-            get;
-            set;
+            get
+            {
+                return selectedIndex;
+            }
+            set
+            {
+                if (value < 0) selectedIndex = DirectoryContent.Length + FileContent.Length - 1;
+                else if (value > DirectoryContent.Length + FileContent.Length - 1) selectedIndex = 0;
+                else selectedIndex = value;
+            }
         }
         void SelectedColor(int i)
         {
@@ -82,19 +91,11 @@ namespace Task1
                 }
                 ConsoleKeyInfo key = Console.ReadKey();
                 if (key.Key == ConsoleKey.UpArrow)
-                {
-                    if (history.Peek().SelectedIndex > 0)
-                    {
-                        history.Peek().SelectedIndex--;
-                    }
-                }
+                    history.Peek().SelectedIndex--;
+
                 else if (key.Key == ConsoleKey.DownArrow)
-                {
-                    if (history.Peek().SelectedIndex < history.Peek().DirectoryContent.Length + history.Peek().FileContent.Length - 1)
-                    {
-                        history.Peek().SelectedIndex++;
-                    }
-                }
+                    history.Peek().SelectedIndex++;
+
                 else if (key.Key == ConsoleKey.Enter)
                 {
                     if (history.Peek().DirectoryContent.Length + history.Peek().FileContent.Length == 0) { break; }
