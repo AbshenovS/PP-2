@@ -160,6 +160,64 @@ namespace Task1
                         history.Push(ly);
                     }
                 }
+
+
+
+                else if (key.Key == ConsoleKey.R)
+                {
+                    Console.Clear();
+                    int torename = history.Peek().SelectedIndex;
+                    int i = torename;
+                    string name, fullname;
+                    int selectedMode;
+
+                    if (torename < history.Peek().Directories.Length)
+                    {
+                        name = history.Peek().Directories[torename].Name;
+                        fullname = history.Peek().Directories[torename].FullName;
+                        selectedMode = 1;
+                    }
+                    else
+                    {
+                        name = history.Peek().Files[torename - history.Peek().Directories.Length].Name;
+                        fullname = history.Peek().Files[torename - history.Peek().Directories.Length].FullName;
+                        selectedMode = 2;
+                    }
+
+                    string path = fullname.Remove(fullname.Length - name.Length);
+                    Console.WriteLine("Please enter the new name with extension");
+                    string newname = Console.ReadLine();
+
+                    if (selectedMode == 1) { new DirectoryInfo(history.Peek().Directories[torename].FullName).MoveTo(path + newname); }
+                    else { new FileInfo(history.Peek().Files[torename - history.Peek().Directories.Length].FullName).MoveTo(path + newname); }
+                    history.Pop();
+
+
+                    if (history.Count == 0)
+                    {
+                        Layer lay = new Layer
+                        {
+                            Directories = firstdir.GetDirectories(),
+                            Files = firstdir.GetFiles(),
+                            SelectedIndex = i
+                        };
+                        history.Push(lay);
+                    }
+                    else
+                    {
+                        torename = history.Peek().SelectedIndex;
+                        DirectoryInfo dir = history.Peek().Directories[torename];
+                        Layer ly = new Layer
+                        {
+                            Directories = dir.GetDirectories(),
+                            Files = dir.GetFiles(),
+                            SelectedIndex = i
+                        };
+                        history.Push(ly);
+                    }
+                }
+
+
                 else if (key.Key == ConsoleKey.Escape)
                 {
                     quit = true;
