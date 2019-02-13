@@ -128,6 +128,7 @@ namespace Task1
                         mode = FSIMode.Folder;
                 }
 
+
                 else if (key.Key == ConsoleKey.D)
                 {
                     int todelete = history.Peek().SelectedIndex;
@@ -162,8 +163,7 @@ namespace Task1
                 }
 
 
-
-                else if (key.Key == ConsoleKey.R)
+                   else if (key.Key == ConsoleKey.R)
                 {
                     Console.Clear();
                     int torename = history.Peek().SelectedIndex;
