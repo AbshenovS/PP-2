@@ -66,11 +66,11 @@ namespace Task1
     {
         static void Main(string[] args)
         {
-            DirectoryInfo dir = new DirectoryInfo(@"C:\Users\hp\Desktop\Test");
+            DirectoryInfo firstdir = new DirectoryInfo(@"C:\Users\hp\Desktop\Test");
             Layer l = new Layer
             {
-                Directories = dir.GetDirectories(),
-                Files = dir.GetFiles(),
+                Directories = firstdir.GetDirectories(),
+                Files = firstdir.GetFiles(),
                 SelectedIndex = 0
             };
             Stack<Layer> history = new Stack<Layer>();
@@ -96,12 +96,13 @@ namespace Task1
                     if (newopen < history.Peek().Directories.Length)
                     {
                         DirectoryInfo d = history.Peek().Directories[newopen];
-                        history.Push(new Layer
+                        Layer ly = new Layer
                         {
                             Directories = d.GetDirectories(),
                             Files = d.GetFiles(),
                             SelectedIndex = 0
-                        });
+                        };
+                        history.Push(ly);
                     }
                     else
                     {
@@ -129,9 +130,36 @@ namespace Task1
 
                 else if (key.Key == ConsoleKey.D)
                 {
+                    int todelete = history.Peek().SelectedIndex;
+                    int j = todelete;
+                    if (todelete < history.Peek().Directories.Length) { history.Peek().Directories[todelete].Delete(true); }
+                    else { history.Peek().Files[todelete - history.Peek().Directories.Length].Delete(); }
+                    history.Pop();
 
+                    if (history.Count() == 0)
+                    {
+                        Layer lay = new Layer
+                        {
+                            Directories = firstdir.GetDirectories(),
+                            Files = firstdir.GetFiles(),
+                            SelectedIndex = j--
+                        };
+                        history.Push(lay);
+                    }
+
+                    else
+                    {
+                        int i = history.Peek().SelectedIndex;
+                        DirectoryInfo dd = history.Peek().Directories[i];
+                        Layer ly = new Layer
+                        {
+                            Directories = dd.GetDirectories(),
+                            Files = dd.GetFiles(),
+                            SelectedIndex = j--
+                        };
+                        history.Push(ly);
+                    }
                 }
-
                 else if (key.Key == ConsoleKey.Escape)
                 {
                     quit = true;
