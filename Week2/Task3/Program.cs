@@ -15,15 +15,15 @@ namespace Task3
             DirectoryInfo folder= new DirectoryInfo(@"C:\Users\hp\Desktop\Test");
             Print(folder, "");
         }
-        static void Print(DirectoryInfo folder,string s)
+        static void Print(DirectoryInfo d, string s)
         {
-            Console.WriteLine(s + folder.Name);
+            Console.WriteLine(s+d.Name);
             s = s + "   ";
-            FileSystemInfo[] x = folder.GetFileSystemInfos();
-            foreach(var t in x)
+            FileSystemInfo[] fs = d.GetFileSystemInfos();
+            foreach(var a in fs)
             {
-                if (t.GetType() == typeof(DirectoryInfo)) Print(t as DirectoryInfo, s);
-                else Console.WriteLine(s+t.Name);
+                if (a.GetType() == typeof(DirectoryInfo)) Print(a as DirectoryInfo, s);
+                else Console.WriteLine(s+a);
             }
         }
     }

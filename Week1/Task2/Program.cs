@@ -17,7 +17,7 @@ namespace Task2
             name = nname;
             id = iid;
             year = 0;
-    }
+        }
 
         public string Accessname()              //method to access name of object
         {
@@ -31,7 +31,7 @@ namespace Task2
         public void Show(Student a)             //method to show informations about student
         {
             year++;
-            Console.WriteLine(a.Accessname() + " " + a.Accessid() +" "+year);
+            Console.WriteLine(a.Accessname() + " " + a.Accessid() + " " + year);
         }
 
     }
@@ -46,7 +46,7 @@ namespace Task2
             a.Show(a);
             b.Show(b);
             a.Show(a);                          //call of function
-            
+
         }
     }
 }

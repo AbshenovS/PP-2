@@ -71,7 +71,7 @@ namespace Task1
             {
                 Directories = firstdir.GetDirectories(),
                 Files = firstdir.GetFiles(),
-                SelectedIndex = 0
+                SelectedIndex = 00
             };
             Stack<Layer> history = new Stack<Layer>();
             history.Push(l);
@@ -129,25 +129,26 @@ namespace Task1
                 }
 
 
-                else if (key.Key == ConsoleKey.D)
-                {
-                    int todelete = history.Peek().SelectedIndex;
-                    int j = todelete;
-                    if (todelete < history.Peek().Directories.Length) { history.Peek().Directories[todelete].Delete(true); }
-                    else { history.Peek().Files[todelete - history.Peek().Directories.Length].Delete(); }
+                else if(key.Key==ConsoleKey.D){
+                    int j = history.Peek().SelectedIndex;
+                    int k;
+                    if (j == history.Peek().Directories.Length + history.Peek().Files.Length - 1) k = --j;
+                    else k = j;
+                    if (j < history.Peek().Directories.Length) history.Peek().Directories[j].Delete(true);
+                    else history.Peek().Files[j - history.Peek().Directories.Length].Delete();
                     history.Pop();
 
-                    if (history.Count() == 0)
+                    if (history.Count == 0)
                     {
-                        Layer lay = new Layer
+                        Layer lll = new Layer
                         {
                             Directories = firstdir.GetDirectories(),
                             Files = firstdir.GetFiles(),
-                            SelectedIndex = j--
+                            SelectedIndex = k
                         };
-                        history.Push(lay);
+                    history.Push(lll);
                     }
-
+                                                                                                                        
                     else
                     {
                         int i = history.Peek().SelectedIndex;
@@ -156,7 +157,7 @@ namespace Task1
                         {
                             Directories = dd.GetDirectories(),
                             Files = dd.GetFiles(),
-                            SelectedIndex = j--
+                            SelectedIndex = k
                         };
                         history.Push(ly);
                     }
@@ -188,7 +189,7 @@ namespace Task1
                     Console.WriteLine("Please enter the new name with extension");
                     string newname = Console.ReadLine();
 
-                    if (selectedMode == 1) { new DirectoryInfo(history.Peek().Directories[torename].FullName).MoveTo(path + newname); }
+                    if (selectedMode == 1) {new DirectoryInfo(history.Peek().Directories[torename].FullName).MoveTo(path + newname); }
                     else { new FileInfo(history.Peek().Files[torename - history.Peek().Directories.Length].FullName).MoveTo(path + newname); }
                     history.Pop();
 
@@ -199,7 +200,7 @@ namespace Task1
                         {
                             Directories = firstdir.GetDirectories(),
                             Files = firstdir.GetFiles(),
-                            SelectedIndex = i
+                            SelectedIndex = 0
                         };
                         history.Push(lay);
                     }
@@ -211,7 +212,7 @@ namespace Task1
                         {
                             Directories = dir.GetDirectories(),
                             Files = dir.GetFiles(),
-                            SelectedIndex = i
+                            SelectedIndex = 0
                         };
                         history.Push(ly);
                     }
